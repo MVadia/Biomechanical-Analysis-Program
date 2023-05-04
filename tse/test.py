@@ -3,11 +3,13 @@ import math
 import pandas as pd
 import matplotlib.pyplot as pt
 import csv
+import os
+import generateGraphs
 
-##ignore this
-df = pd.read_csv("scan_data.csv")
-left_knee_flex = pd.read_csv("scan_data.csv", usecols = [1], nrows= 1)
-print(left_knee_flex)
+
+
+
+
 
 
 
@@ -16,9 +18,9 @@ x = []
 yLKnee = []
 yRKnee = []
 
-
+inputFile = "tse/scan_data.csv"
 ##open the csv file as read only, read the column needed
-with open ("scan_data.csv", "r") as dataSet:
+with open (inputFile, "r") as dataSet:
     plots = csv.reader(dataSet, delimiter=",") 
 
     ##changes the above lists with CSV values

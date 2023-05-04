@@ -1,0 +1,76 @@
+#Generate graphs from CSV inputimport numpy as np
+import math
+import pandas as pd
+import matplotlib.pyplot as pt
+import csv
+##TKINTER
+import tkinter as tk
+
+#global variables
+inputFile = "tse/scan_data.csv"
+
+yLKnee = []
+yRKnee = []
+yLElblow = []
+yRElbow = []
+
+
+#Knee flexion
+def KneeData ():
+    x = []
+    with open (inputFile, "r") as dataSet:
+        plots = csv.reader(dataSet, delimiter=",") 
+
+        ##changes the above lists with CSV values
+        for row in plots:
+            x.append(row[0])
+            yLKnee.append(row[1])
+            yRKnee.append(row[4])
+    
+
+    ##remove the first value from list (non int value)     
+    x.remove(x[0])
+    yLKnee.remove(yLKnee[0])
+    yRKnee.remove(yRKnee[0])
+    
+    ##plot graph
+    pt.axis([0, 200, 0, 70])
+    xInt = [eval(i) for i in x]
+    yLKneeInt = [eval(i) for i in yLKnee]
+    yRKneeInt = [eval(i) for i in yRKnee]
+    pt.plot(xInt,yLKneeInt, color = "red", label = "Left Knee")
+    pt.plot(xInt, yRKneeInt, color = "blue", label = "Right Knee")
+    pt.legend(loc="upper left") ##location of key
+    pt.show() ##show graph
+
+    
+
+def elbowData():
+    x = []
+    with open (inputFile, "r") as dataSet:
+        plots = csv.reader(dataSet, delimiter=",")
+        for row in plots:
+            x.append(row[0])
+            yLElblow.append(row[13])
+            yRElbow.append(row[15])
+
+    x.remove(x[0])
+    yLElblow.remove(yLElblow[0])
+    yRElbow.remove(yRElbow[0])
+
+    ##plot graph
+    pt.axis([0, 200, 0, 70])
+    xInt = [eval(i) for i in x]
+    yLElblowInt = [eval(i) for i in yLElblow]
+    yRElbowInt = [eval(i) for i in yRElbow]
+    pt.plot(xInt,yLElblowInt, color = "red", label = "Left Elbow")
+    pt.plot(xInt, yRElbowInt, color = "blue", label = "Right Elbow")
+    pt.legend(loc="upper left")
+    pt.show()
+
+
+
+#KneeData()
+elbowData()
+
+
