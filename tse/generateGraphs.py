@@ -3,6 +3,7 @@ import math
 import pandas as pd
 import matplotlib.pyplot as pt
 import csv
+import numpy as np
 ##TKINTER
 import tkinter as tk
 
@@ -14,6 +15,9 @@ yRKnee = []
 yLElblow = []
 yRElbow = []
 
+
+
+        
 
 #Knee flexion
 def KneeData ():
@@ -38,10 +42,33 @@ def KneeData ():
     xInt = [eval(i) for i in x]
     yLKneeInt = [eval(i) for i in yLKnee]
     yRKneeInt = [eval(i) for i in yRKnee]
+    
+    ##calculate mean, min and max of knee flexion 
+    if (np.min(yLKneeInt))<(np.min(yRKneeInt)):
+        min = np.min(yLKneeInt)
+    else:
+        min = np.min(yRKneeInt)
+    
+    if (np.max(yLKneeInt))>(np.max(yRKneeInt)):
+        max = np.max(yLKneeInt)
+    else:
+        max = np.max(yRKneeInt)
+
+
+    mean = np.mean(yLKneeInt)
+    max = np.max(yLKneeInt)
+
     pt.plot(xInt,yLKneeInt, color = "red", label = "Left Knee")
+    pt.axhline(mean, color='green', linestyle='--', label='Mean')  ## add mean line
+    pt.axhline(min, color='black', linestyle='--', label='Minimum')  ## add minimum line
+    pt.axhline(max, color='purple', linestyle='--', label='Maximum')  ## add maximum line
     pt.plot(xInt, yRKneeInt, color = "blue", label = "Right Knee")
     pt.legend(loc="upper left") ##location of key
-    pt.show() ##show graph
+    pt.savefig("Knee_Flexion.png")
+    pt.show() ## Show graph
+    
+    
+    
 
     
 
@@ -59,18 +86,22 @@ def elbowData():
     yRElbow.remove(yRElbow[0])
 
     ##plot graph
-    pt.axis([0, 200, 0, 70])
+    fig, ax = pt.subplots()
+    pt.axis([0, 200, 0, 200])
     xInt = [eval(i) for i in x]
     yLElblowInt = [eval(i) for i in yLElblow]
     yRElbowInt = [eval(i) for i in yRElbow]
     pt.plot(xInt,yLElblowInt, color = "red", label = "Left Elbow")
     pt.plot(xInt, yRElbowInt, color = "blue", label = "Right Elbow")
     pt.legend(loc="upper left")
+    pt.savefig("Elbow Flexion")
     pt.show()
 
 
 
-#KneeData()
-elbowData()
+    
+
+
+KneeData()
 
 
