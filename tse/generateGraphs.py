@@ -104,7 +104,7 @@ def elbowData():
     pt.plot(xInt, yRElbowInt, color = "blue", label = "Right Elbow")
     pt.legend(loc="upper left")
     pt.savefig("Elbow Flexion")
-    pt.show()
+    #pt.show()
 
 
 
