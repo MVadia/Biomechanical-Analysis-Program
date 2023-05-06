@@ -14,12 +14,13 @@ yLKnee = []
 yRKnee = []
 yLElblow = []
 yRElbow = []
-
+yPelvis = []
 
 
         
 
 #Knee flexion
+
 def KneeData ():
     x = []
     with open (inputFile, "r") as dataSet:
@@ -53,10 +54,7 @@ def KneeData ():
         max = np.max(yLKneeInt)
     else:
         max = np.max(yRKneeInt)
-
-
     mean = np.mean(yLKneeInt)
-    max = np.max(yLKneeInt)
 
     pt.plot(xInt,yLKneeInt, color = "red", label = "Left Knee")
     pt.axhline(mean, color='green', linestyle='--', label='Mean')  ## add mean line
@@ -65,7 +63,7 @@ def KneeData ():
     pt.plot(xInt, yRKneeInt, color = "blue", label = "Right Knee")
     pt.legend(loc="upper left") ##location of key
     pt.savefig("Knee_Flexion.png")
-    pt.show() ## Show graph
+    #pt.show() ## Show graph
     
     
     
@@ -91,15 +89,75 @@ def elbowData():
     xInt = [eval(i) for i in x]
     yLElblowInt = [eval(i) for i in yLElblow]
     yRElbowInt = [eval(i) for i in yRElbow]
+    ##calculate min mean and max
+    if (np.min(yLElblowInt))<(np.min(yRElbowInt)):
+        min = np.min(yLElblowInt)
+    else:
+        min = np.min(yRElbowInt)
+    
+    if (np.max(yLElblowInt))>(np.max(yRElbowInt)):
+        max = np.max(yLElblowInt)
+    else:
+        max = np.max(yRElbowInt)
+    mean = np.mean(yLElblowInt)
+
+
     pt.plot(xInt,yLElblowInt, color = "red", label = "Left Elbow")
     pt.plot(xInt, yRElbowInt, color = "blue", label = "Right Elbow")
+    pt.axhline(mean, color='green', linestyle='--', label='Mean')  ## add mean line
+    pt.axhline(min, color='black', linestyle='--', label='Minimum')  ## add minimum line
+    pt.axhline(max, color='purple', linestyle='--', label='Maximum')  ## add maximum line
     pt.legend(loc="upper left")
-    pt.savefig("Elbow Flexion")
-    pt.show()
+    pt.savefig("Elbow_Flexion.png")
+    #pt.show()
+
+def pelvisData():
+    x = []
+    with open (inputFile, "r") as dataSet:
+        plots = csv.reader(dataSet, delimiter=",")
+        for row in plots:
+            x.append(row[0])
+            yPelvis.append(row[34])
+
+
+    x.remove(x[0])
+    print(yPelvis[0])
+    yPelvis.remove(yPelvis[0])
+
+
+    ##plot graph
+    fig, ax = pt.subplots()
+    pt.axis([0, 200, 0, 10])
+    xInt = [eval(i) for i in x]
+    yPelvisInt = [eval(i) for i in yPelvis]
+    ##calculate min mean and max
+
+    min = np.min(yPelvisInt)
+
+
+    max = np.max(yPelvisInt)
+
+    mean = np.mean(yPelvisInt)
+
+
+    pt.plot(xInt,yPelvisInt, color = "red", label = "Pelvis Flexion")
+    pt.axhline(mean, color='green', linestyle='--', label='Mean')  ## add mean line
+    pt.axhline(min, color='black', linestyle='--', label='Minimum')  ## add minimum line
+    pt.axhline(max, color='purple', linestyle='--', label='Maximum')  ## add maximum line
+    pt.legend(loc="upper left")
+    pt.savefig("Pelvis_Flexion.png")
+    #pt.show()
+
+
+
 
 
 
     
+#pelvisData()
+
+#KneeData()
+elbowData()
 
 
 
