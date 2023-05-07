@@ -8,6 +8,6 @@ Before running: pip install requirements.txt
 
 
 ## Developers
-- Muhammad Vadia (Backend + Frontend)
+- Muhammad Vadia (Backend + Frontend + GUI)
 - Jack Higginson (Frontend)
 - Joshua Thomas (GUI)
