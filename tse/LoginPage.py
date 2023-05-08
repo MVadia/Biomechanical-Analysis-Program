@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'LoginPage.ui'
+# Form implementation generated from reading ui file 'LoginPageNew.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -83,6 +83,7 @@ class Ui_Dialog(object):
         self.DoctorLoginButton_2.setFont(font)
         self.DoctorLoginButton_2.setObjectName("DoctorLoginButton_2")
 
+
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
@@ -132,7 +133,7 @@ class Ui_Dialog(object):
         self.DoctorLoginButton.setText(_translate("Dialog", "Login"))
         self.PatientLoginButton.setText(_translate("Dialog", "Login"))
         self.DoctorLoginButton_2.setText(_translate("Dialog", "Register"))
-
+        
 
 if __name__ == "__main__":
     import sys
