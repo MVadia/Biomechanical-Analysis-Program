@@ -9,7 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import sqlite3
+import AlphaDesignCode
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -64,16 +65,21 @@ class Ui_Dialog(object):
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
+
         self.DoctorLoginButton.setFont(font)
         self.DoctorLoginButton.setObjectName("DoctorLoginButton")
         self.PatientLoginButton = QtWidgets.QPushButton(Dialog)
         self.PatientLoginButton.setGeometry(QtCore.QRect(870, 300, 61, 31))
+        self.DoctorLoginButton.clicked.connect(self.doctor_login_pressed)
+
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
         self.PatientLoginButton.setFont(font)
         self.PatientLoginButton.setObjectName("PatientLoginButton")
+        self.PatientLoginButton.clicked.connect(self.patient_login_pressed)
+
         self.DoctorLoginButton_2 = QtWidgets.QPushButton(Dialog)
         self.DoctorLoginButton_2.setGeometry(QtCore.QRect(960, 300, 71, 31))
         font = QtGui.QFont()
@@ -86,6 +92,65 @@ class Ui_Dialog(object):
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+
+
+
+
+
+    def doctor_login_pressed(self):
+        # Retrieve the input values
+        doctor_id_input = self.lineEdit.text()
+        doctor_pass_input = self.lineEdit_2.text()
+        #Dialog.close()
+
+        
+        
+        
+        AlphaDesignCode.Dialog = QtWidgets.QDialog()
+        AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
+        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
+        AlphaDesignCode.Dialog.show()
+        
+        app.exec_()
+        Dialog.close()
+
+
+    def patient_login_pressed(self):
+        #retrieve input
+        patient_id_input = self.lineEdit_3.text()
+        patient_pass_input = self.lineEdit_4.text()
+
+        ##query db
+        connect = sqlite3.connect("loginData.db")
+        cursor = connect.cursor()
+        cursor.execute("SELECT * FROM patient_login WHERE id=? AND password=?", (patient_id_input, patient_pass_input))
+        row = cursor.fetchone()
+
+        ##check for match
+        if row is not None:
+            
+            #login successfull
+            print("successfull")
+            AlphaDesignCode.Dialog = QtWidgets.QDialog()
+            AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
+            AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
+            AlphaDesignCode.Dialog.show()
+            app.exec_()
+            Dialog.close()
+        else:
+            #login failed
+            QtWidgets.QMessageBox.warning(Dialog, "Login Failed", "Invalid Login")
+        
+
+
+
+
+
+
+
+
+        
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate

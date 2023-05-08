@@ -10,11 +10,35 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+import os
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QWidget
+
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+import generateGraphs
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(1363, 899)
+
+
+        ##Graph widget creation
+        self.layout = QVBoxLayout(Dialog)
+        Dialog.setLayout(self.layout)
+        self.widget = QtWidgets.QWidget(Dialog)
+        self.widget.setGeometry(QtCore.QRect(500, 400, 800, 800))
+        self.widget.setObjectName("widget")      
+        self.label = QLabel(self.widget)
+        self.label.setGeometry(QtCore.QRect(374, -73, 800, 800))
+        self.label.setObjectName("label")
+        self.layout.addWidget(self.widget)
+
+
         Dialog.setAutoFillBackground(False)
         self.line = QtWidgets.QFrame(Dialog)
         self.line.setGeometry(QtCore.QRect(290, 80, 20, 731))
@@ -35,6 +59,10 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
+
+        ##knee flex button
+        self.pushButton.clicked.connect(self.on_button_click_Kneeflex)
+
         self.pushButton_2 = QtWidgets.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(40, 260, 221, 71))
         font = QtGui.QFont()
@@ -44,6 +72,10 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setObjectName("pushButton_2")
+
+        ##Button Press Handle: Elbow Flex
+        self.pushButton_2.clicked.connect(self.on_button_clickElbowFlex)
+
         self.pushButton_3 = QtWidgets.QPushButton(Dialog)
         self.pushButton_3.setGeometry(QtCore.QRect(20, 370, 261, 71))
         font = QtGui.QFont()
@@ -202,6 +234,30 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+
+        ##Button press handler: Knee Flex
+    def on_button_click_Kneeflex(self):
+        kneePNG = ('Knee_Flexion.png')
+        if os.path.isfile(kneePNG):
+            pixmap = QPixmap (kneePNG)
+        else:
+            kneePNG = generateGraphs.KneeData()
+            pixmap = QPixmap(kneePNG)
+        self.label.setPixmap(pixmap)
+        pass
+
+        ##Button Handler: Elbow Flex
+    def on_button_clickElbowFlex(self):
+        elbowPNG = ('Elbow_Flexion.png')
+        if os.path.isfile(elbowPNG):
+            pixmap = QPixmap (elbowPNG)
+        else:
+            elbowPNG = generateGraphs.elbowData()
+            pixmap = QPixmap(elbowPNG)
+        self.label.setPixmap(pixmap)
+        pass
+                
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
@@ -291,6 +347,8 @@ class Ui_Dialog(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Squat Smoothness (R)</span></p></body></html>"))
 
 
+
+'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -299,3 +357,4 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
+'''
