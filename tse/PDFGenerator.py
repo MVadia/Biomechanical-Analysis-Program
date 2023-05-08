@@ -1,22 +1,53 @@
-import PyPDF4
+from docx import Document
+from docx.shared import Inches
 
-# Open the existing PDF file in read-binary mode
-with open('existing_template.pdf', 'rb') as existing_file:
+document = Document('existing_template.docx')
 
-    # Create a new PDF file in write-binary mode
-    with open('output.pdf', 'wb') as new_file:
+# add the image to the document
+image_path = 'Knee_Flexion.png'
+image = document.add_picture(image_path)
 
-        # Create a PDF reader object for the existing file
-        reader = PyPDF4.PdfFileReader(existing_file)
+# get the image dimensions
+image_width = image.width
+image_height = image.height
 
-        # Create a PDF writer object for the new file
-        writer = PyPDF4.PdfFileWriter()
+# set the position of the image in the page (in EMU)
+left = Inches(2)
+top = Inches(4)
 
-        # Select the first page of the existing file
-        page = reader.getPage(0)
+# set the image size
+width = Inches(4)
+height = Inches(3)
 
-        # Add the page to the writer object
-        writer.addPage(page)
+# set the position and size of the image
+image.left = left
+image.top = top
+image.width = width
+image.height = height
 
-        # Write the writer object to the new file
-        writer.write(new_file)
+
+
+# add the image to the document
+image_path = 'Elbow_Flexion.png'
+image = document.add_picture(image_path)
+
+# get the image dimensions
+image_width = image.width
+image_height = image.height
+
+# set the position of the image in the page (in EMU)
+left = Inches(2)
+top = Inches(4)
+
+# set the image size
+width = Inches(4)
+height = Inches(3)
+
+# set the position and size of the image
+image.left = left
+image.top = top
+image.width = width
+image.height = height
+
+# save the document
+document.save('Modified.docx')
