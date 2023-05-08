@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sqlite3
 import AlphaDesignCode
 
 class Ui_Dialog(object):
@@ -119,14 +120,30 @@ class Ui_Dialog(object):
         #retrieve input
         patient_id_input = self.lineEdit_3.text()
         patient_pass_input = self.lineEdit_4.text()
+
+        ##query db
+        connect = sqlite3.connect("loginData.db")
+        cursor = connect.cursor()
+        cursor.execute("SELECT * FROM patient_login WHERE id=? AND password=?", (patient_id_input, patient_pass_input))
+        row = cursor.fetchone()
+
+        ##check for match
+        if row is not None:
+            
+            #login successfull
+            print("successfull")
+            AlphaDesignCode.Dialog = QtWidgets.QDialog()
+            AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
+            AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
+            AlphaDesignCode.Dialog.show()
+            app.exec_()
+            Dialog.close()
+        else:
+            #login failed
+            QtWidgets.QMessageBox.warning(Dialog, "Login Failed", "Invalid Login")
         
-        ##launch generate graph
-        AlphaDesignCode.Dialog = QtWidgets.QDialog()
-        AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
-        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
-        AlphaDesignCode.Dialog.show()
-        app.exec_()
-        Dialog.close()
+
+
 
 
 
