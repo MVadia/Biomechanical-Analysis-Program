@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
-import AlphaDesignCode
+import AlphaDesignCode, doctorEntries, patientRegister
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -88,6 +88,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.DoctorLoginButton_2.setFont(font)
         self.DoctorLoginButton_2.setObjectName("DoctorLoginButton_2")
+        self.DoctorLoginButton_2.clicked.connect(self.patient_register_pressed)
 
 
         self.retranslateUi(Dialog)
@@ -102,18 +103,33 @@ class Ui_Dialog(object):
         # Retrieve the input values
         doctor_id_input = self.lineEdit.text()
         doctor_pass_input = self.lineEdit_2.text()
-        #Dialog.close()
+
+        #query db
+        connect = sqlite3.connect("loginData.db")
+        cursor = connect.cursor()
+        cursor.execute("SELECT * FROM doctors WHERE id=? AND password=?", (doctor_id_input, doctor_pass_input))
+        row = cursor.fetchone()
+
+        ##check for match
+        if row is not None:
+            #login successfull
+            print("successfull")
+            doctorEntries.Dialog = QtWidgets.QDialog()
+            doctorEntries.ui = doctorEntries.Ui_Dialog()
+            doctorEntries.ui.setupUi(doctorEntries.Dialog)
+            doctorEntries.Dialog.show()
+            app.exec_()
+            Dialog.close()
+        else:
+            #login failed
+            QtWidgets.QMessageBox.warning(Dialog, "Login Failed", "Invalid Login")
+
+
 
         
         
-        
-        AlphaDesignCode.Dialog = QtWidgets.QDialog()
-        AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
-        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
-        AlphaDesignCode.Dialog.show()
-        
-        app.exec_()
-        Dialog.close()
+
+
 
 
     def patient_login_pressed(self):
@@ -138,9 +154,20 @@ class Ui_Dialog(object):
             AlphaDesignCode.Dialog.show()
             app.exec_()
             Dialog.close()
+            
         else:
             #login failed
             QtWidgets.QMessageBox.warning(Dialog, "Login Failed", "Invalid Login")
+        
+
+    def patient_register_pressed(self):
+        patientRegister.Dialog = QtWidgets.QDialog()
+        patientRegister.ui = patientRegister.Ui_Dialog()
+        patientRegister.ui.setupUi(patientRegister.Dialog)
+        patientRegister.Dialog.show()
+        app.exec_()
+        Dialog.close()
+        
         
 
 
@@ -199,6 +226,7 @@ class Ui_Dialog(object):
         self.PatientLoginButton.setText(_translate("Dialog", "Login"))
         self.DoctorLoginButton_2.setText(_translate("Dialog", "Register"))
         
+
 
 if __name__ == "__main__":
     import sys

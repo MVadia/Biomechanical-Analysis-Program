@@ -8,3 +8,5 @@ cursor.execute('''CREATE TABLE patient_login (id INTEGER PRIMARY KEY, name TEXT,
 cursor.execute("INSERT INTO patient_login (name, password) VALUES (?, ?)", ('John Smith', 'password321'))
 connect.commit()
 connect.close()
+
+

@@ -161,6 +161,7 @@ class Ui_Dialog(object):
         self.pushButton.setText(_translate("Dialog", "Select CSV"))
 
 
+'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -169,3 +170,4 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
+'''
