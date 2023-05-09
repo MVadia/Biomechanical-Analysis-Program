@@ -24,8 +24,13 @@ import generateGraphs, HelpPage, LoginPage
 
 class Ui_Dialog(object):
     
-    def setupUi(self, Dialog, patient_id):
+    def setupUi(self, Dialog, patient_id, name, address, contact_number, age, id_number):
         self.patient_id = patient_id
+        self.id_number = id_number
+        self.name = name
+        self.address = address
+        self.contact_number = contact_number
+        self.age = age
         app = QtWidgets.QApplication(sys.argv)
         Dialog.setObjectName("Dialog")
         Dialog.resize(1363, 899)
@@ -346,21 +351,7 @@ class Ui_Dialog(object):
 
         
 
-
         
-        ##retrieve pateint data from database
-        self.connect = sqlite3.connect("loginData.db")
-        self.cursor = self.connect.cursor()
-        self.cursor.execute("SELECT name, id, age, address, contact FROM patientDetails WHERE id = ? ", (self.patient_id,))
-        result = self.cursor.fetchone()
-        self.connect.close()
-
-        self.name = result[0]
-        self.id_number = result[1]
-        self.age = result[2]
-        self.address = result[3]
-        self.contact_number = result[4]
-
         ##set text values
         text = "<p><strong>Name:</strong> {0}</p>".format(self.name)
         text += "<p><strong>ID Number:</strong> {0}</p>".format(self.id_number)

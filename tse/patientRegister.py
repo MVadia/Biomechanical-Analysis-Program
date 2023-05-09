@@ -15,6 +15,8 @@ import AlphaDesignCode, HelpPage
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
+        app = QtWidgets.QApplication(sys.argv)
+        
         Dialog.setObjectName("Dialog")
         Dialog.resize(1394, 896)
         self.textBrowser = QtWidgets.QTextBrowser(Dialog)
@@ -78,7 +80,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.CreateAccountPushButton.setFont(font)
         self.CreateAccountPushButton.setObjectName("CreateAccountPushButton")
-        self.CreateAccountPushButton.clicked.connect(self.patient_data_entry_clicked)
+        self.CreateAccountPushButton.clicked.connect(lambda: self.patient_data_entry_clicked (app, Dialog))
         self.pushButton = QtWidgets.QPushButton(Dialog)
         self.pushButton.setGeometry(QtCore.QRect(1280, 30, 31, 31))
         font = QtGui.QFont()
@@ -98,13 +100,14 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def patient_data_entry_clicked(self):
+    def patient_data_entry_clicked(self, app, Dialog):
         patient_name = self.FirstName_Userinput.text() +" - "+ self.LastName_UserInput.text()
         patient_address = self.HomeAddress_UserInput.text()
         patient_age = self.Age_UserInput.text()
         patient_gender = self.Gender_UserInput.text()
         patient_contact = self.ContactNumber_UserInput.text()
-        patient_password = "password321"
+        patient_password = self.PatientID_userinput_2.text()
+        patientID = self.PatientID_userinput.text()
         
         connect = sqlite3.connect("loginData.db")
         cursor = connect.cursor()
@@ -133,12 +136,12 @@ class Ui_Dialog(object):
         ##continue to main page
         AlphaDesignCode.Dialog = QtWidgets.QDialog()
         AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
-        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
+        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog, patient_id, patient_name, patient_address, patient_contact, patient_age, patientID )
         AlphaDesignCode.Dialog.show()
         app.exec_()
         Dialog.close()
 
-    def launch_help_page(self):
+    def launch_help_page(sel, app, Dialog):
         HelpPage.Dialog = QtWidgets.QDialog()
         HelpPage.ui = HelpPage.Ui_Dialog()
         HelpPage.ui.setupUi(HelpPage.Dialog)
@@ -214,7 +217,7 @@ class Ui_Dialog(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Password:</span></p></body></html>"))
         self.PatientID_userinput_2.setToolTip(_translate("Dialog", "<html><head/><body><p>Enter Your 6 Digit Patient ID Number</p></body></html>"))
 
-
+'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -223,3 +226,4 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
+'''

@@ -79,7 +79,7 @@ class Ui_Dialog(object):
         self.DoctorLoginButton_2.setObjectName("DoctorLoginButton_2")
 
         ##patient login pressed
-        self.DoctorLoginButton_2.clicked.connect(self.patient_register_pressed)
+        self.DoctorLoginButton_2.clicked.connect(lambda: self.patient_register_pressed(app, Dialog))
 
         self.textBrowser = QtWidgets.QTextBrowser(Dialog)
         self.textBrowser.setGeometry(QtCore.QRect(1000, 110, 131, 31))
@@ -110,7 +110,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.launch_help_page)
+        self.pushButton.clicked.connect(lambda: self.launch_help_page(Dialog, app))
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -161,9 +161,24 @@ class Ui_Dialog(object):
             
             #login successfull
             print("successfull")
+
+            self.connect = sqlite3.connect("loginData.db")
+            self.cursor = self.connect.cursor()
+            self.cursor.execute("SELECT name, id, age, address, contact FROM patientDetails WHERE id = ? ", (patient_id_input,))
+            result = self.cursor.fetchone()
+            self.connect.close()
+
+            self.name = result[0]
+            self.id_number = result[1]
+            self.age = result[2]
+            self.address = result[3]
+            self.contact_number = result[4]
+
+
             AlphaDesignCode.Dialog = QtWidgets.QDialog()
             AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
-            AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog, patient_id_input)
+            AlphaDesignCode.ui.patient_id = patient_id_input
+            AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog, patient_id_input, self.name, self.address, self.contact_number, self.age, self.id_number)
             AlphaDesignCode.Dialog.show()
             app.exec_()
             Dialog.close()
@@ -173,7 +188,7 @@ class Ui_Dialog(object):
             QtWidgets.QMessageBox.warning(Dialog, "Login Failed", "Invalid Login")
         
 
-    def patient_register_pressed(self):
+    def patient_register_pressed(self, app, Dialog):
         patientRegister.Dialog = QtWidgets.QDialog()
         patientRegister.ui = patientRegister.Ui_Dialog()
         patientRegister.ui.setupUi(patientRegister.Dialog)

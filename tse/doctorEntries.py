@@ -169,7 +169,7 @@ class Ui_Dialog(object):
         ##contrinue to main page
         AlphaDesignCode.Dialog = QtWidgets.QDialog()
         AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
-        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
+        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog, patient_id, patient_name, patient_address, patient_contact, patient_age, patient_id)
         AlphaDesignCode.Dialog.show()
         app.exec_()
         Dialog.close()

@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import AlphaDesignCode
+import LoginPage
 import sys
 
 
@@ -50,10 +50,13 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def return_to_login(self, app, Dialog):
-        AlphaDesignCode.Dialog = QtWidgets.QDialog()
-        AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
-        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
-        AlphaDesignCode.Dialog.show()
+        LoginPage.Dialog = QtWidgets.QDialog()
+        LoginPage.ui = LoginPage.Ui_Dialog()
+        LoginPage.ui.setupUi(LoginPage.Dialog)
+        LoginPage.Dialog.show()
+        app.exec_
+        Dialog.close()
+        
         app.exec_()
         Dialog.close()
 
