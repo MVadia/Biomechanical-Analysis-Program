@@ -11,6 +11,7 @@ import tkinter as tk
 #global variables
 inputFile = "tse/scan_data.csv"
 
+
 yLKnee = []
 yRKnee = []
 yLElblow = []
@@ -101,7 +102,7 @@ def elbowData():
     else:
         max = np.max(yRElbowInt)
     mean = np.mean(yLElblowInt)
-    mean = np.mean(yLElblowInt)
+
     pt.axhline(mean, color='green', linestyle='--', label='Mean')  ## add mean line
     pt.axhline(min, color='black', linestyle='--', label='Minimum')  ## add minimum line
     pt.axhline(max, color='purple', linestyle='--', label='Maximum')  ## add maximum line
@@ -110,7 +111,7 @@ def elbowData():
     pt.plot(xInt,yLElblowInt, color = "red", label = "Left Elbow")
     pt.plot(xInt, yRElbowInt, color = "blue", label = "Right Elbow")
     pt.legend(loc="upper left")
-    pt.savefig("Elbow Flexion")
+    pt.savefig("Elbow_Flexion")
     #pt.show()
 
     ##pelvis flexion graphs
@@ -156,4 +157,4 @@ KneeData()
 
 
 elbowData()
-pelvisData()
+#pelvisData()
