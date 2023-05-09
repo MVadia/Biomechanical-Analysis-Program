@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'New_GUIDESIGN.ui'
+# Form implementation generated from reading ui file 'gui.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -10,38 +10,14 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import os
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QLabel
-from PyQt5.QtWidgets import QVBoxLayout
-from PyQt5.QtWidgets import QWidget
-
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
-import generateGraphs
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(1363, 899)
-
-
-        ##Graph widget creation
-        self.layout = QVBoxLayout(Dialog)
-        Dialog.setLayout(self.layout)
-        self.widget = QtWidgets.QWidget(Dialog)
-        self.widget.setGeometry(QtCore.QRect(500, 400, 800, 800))
-        self.widget.setObjectName("widget")      
-        self.label = QLabel(self.widget)
-        self.label.setGeometry(QtCore.QRect(374, -73, 800, 800))
-        self.label.setObjectName("label")
-        self.layout.addWidget(self.widget)
-
-
         Dialog.setAutoFillBackground(False)
         self.line = QtWidgets.QFrame(Dialog)
-        self.line.setGeometry(QtCore.QRect(290, 80, 20, 731))
+        self.line.setGeometry(QtCore.QRect(290, 90, 20, 721))
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
@@ -59,10 +35,6 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
-
-        ##knee flex button
-        self.pushButton.clicked.connect(self.on_button_click_Kneeflex)
-
         self.pushButton_2 = QtWidgets.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(40, 260, 221, 71))
         font = QtGui.QFont()
@@ -72,10 +44,6 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setObjectName("pushButton_2")
-
-        ##Button Press Handle: Elbow Flex
-        self.pushButton_2.clicked.connect(self.on_button_clickElbowFlex)
-
         self.pushButton_3 = QtWidgets.QPushButton(Dialog)
         self.pushButton_3.setGeometry(QtCore.QRect(20, 370, 261, 71))
         font = QtGui.QFont()
@@ -86,12 +54,12 @@ class Ui_Dialog(object):
         self.pushButton_3.setFont(font)
         self.pushButton_3.setObjectName("pushButton_3")
         self.line_3 = QtWidgets.QFrame(Dialog)
-        self.line_3.setGeometry(QtCore.QRect(0, 70, 1361, 16))
+        self.line_3.setGeometry(QtCore.QRect(0, 80, 1361, 16))
         self.line_3.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_3.setObjectName("line_3")
         self.line_4 = QtWidgets.QFrame(Dialog)
-        self.line_4.setGeometry(QtCore.QRect(1103, 80, 20, 731))
+        self.line_4.setGeometry(QtCore.QRect(1103, 90, 20, 721))
         self.line_4.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_4.setObjectName("line_4")
@@ -192,7 +160,7 @@ class Ui_Dialog(object):
         self.line_13.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_13.setObjectName("line_13")
         self.textBrowser = QtWidgets.QTextBrowser(Dialog)
-        self.textBrowser.setGeometry(QtCore.QRect(600, 10, 241, 61))
+        self.textBrowser.setGeometry(QtCore.QRect(570, 0, 271, 81))
         self.textBrowser.setObjectName("textBrowser")
         self.textBrowser_2 = QtWidgets.QTextBrowser(Dialog)
         self.textBrowser_2.setGeometry(QtCore.QRect(20, 90, 271, 31))
@@ -230,33 +198,25 @@ class Ui_Dialog(object):
         self.textBrowser_13 = QtWidgets.QTextBrowser(Dialog)
         self.textBrowser_13.setGeometry(QtCore.QRect(320, 770, 161, 31))
         self.textBrowser_13.setObjectName("textBrowser_13")
+        self.pushButton_4 = QtWidgets.QPushButton(Dialog)
+        self.pushButton_4.setGeometry(QtCore.QRect(1260, 20, 31, 31))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_4.setFont(font)
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.pushButton_5 = QtWidgets.QPushButton(Dialog)
+        self.pushButton_5.setGeometry(QtCore.QRect(60, 20, 81, 31))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_5.setFont(font)
+        self.pushButton_5.setObjectName("pushButton_5")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-
-
-        ##Button press handler: Knee Flex
-    def on_button_click_Kneeflex(self):
-        kneePNG = ('Knee_Flexion.png')
-        if os.path.isfile(kneePNG):
-            pixmap = QPixmap (kneePNG)
-        else:
-            kneePNG = generateGraphs.KneeData()
-            pixmap = QPixmap(kneePNG)
-        self.label.setPixmap(pixmap)
-        pass
-
-        ##Button Handler: Elbow Flex
-    def on_button_clickElbowFlex(self):
-        elbowPNG = ('Elbow_Flexion.png')
-        if os.path.isfile(elbowPNG):
-            pixmap = QPixmap (elbowPNG)
-        else:
-            elbowPNG = generateGraphs.elbowData()
-            pixmap = QPixmap(elbowPNG)
-        self.label.setPixmap(pixmap)
-        pass
-                
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -345,10 +305,11 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Squat Smoothness (R)</span></p></body></html>"))
+        self.pushButton_4.setToolTip(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Help Page</span></p></body></html>"))
+        self.pushButton_4.setText(_translate("Dialog", "?"))
+        self.pushButton_5.setText(_translate("Dialog", "Log Out"))
 
 
-
-'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -357,4 +318,3 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
-'''
