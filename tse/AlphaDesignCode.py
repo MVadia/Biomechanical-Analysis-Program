@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sqlite3
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPixmap
@@ -22,7 +23,10 @@ import generateGraphs, HelpPage, LoginPage
 
 
 class Ui_Dialog(object):
-    def setupUi(self, Dialog):
+    
+    def setupUi(self, Dialog, patient_id):
+        self.patient_id = patient_id
+        app = QtWidgets.QApplication(sys.argv)
         Dialog.setObjectName("Dialog")
         Dialog.resize(1363, 899)
 
@@ -106,6 +110,8 @@ class Ui_Dialog(object):
         font.setPointSize(10)
         self.checkBox.setFont(font)
         self.checkBox.setObjectName("checkBox")
+        
+
         self.checkBox_2 = QtWidgets.QCheckBox(Dialog)
         self.checkBox_2.setGeometry(QtCore.QRect(1130, 480, 71, 17))
         font = QtGui.QFont()
@@ -151,6 +157,8 @@ class Ui_Dialog(object):
         self.pushButton_7 = QtWidgets.QPushButton(Dialog)
         self.pushButton_7.setGeometry(QtCore.QRect(1180, 730, 91, 31))
         self.pushButton_7.setObjectName("pushButton_7")
+        self.pushButton_7.clicked.connect(self.graph_selection)
+
         self.line_6 = QtWidgets.QFrame(Dialog)
         self.line_6.setGeometry(QtCore.QRect(300, 590, 811, 16))
         self.line_6.setFrameShape(QtWidgets.QFrame.HLine)
@@ -238,7 +246,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton_4.setFont(font)
         self.pushButton_4.setObjectName("pushButton_4") ##help butotn
-        self.pushButton_4.clicked.connect(self.launch_help_page)
+        self.pushButton_4.clicked.connect(lambda: self.launch_help_page(app, Dialog))
         self.pushButton_5 = QtWidgets.QPushButton(Dialog)
         self.pushButton_5.setGeometry(QtCore.QRect(60, 20, 81, 31))
         font = QtGui.QFont()
@@ -247,12 +255,20 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton_5.setFont(font)
         self.pushButton_5.setObjectName("pushButton_5") ##log out
-        self.pushButton_5.clicked.connect(self.logout)
+        self.pushButton_5.clicked.connect(lambda: self.logout(app, Dialog))
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
 
+
+        self.graph_select = { "KneeGraph": self.checkBox.isChecked(),
+                           "ElbowGraph": self.checkBox_2.isChecked(),
+                           "PelvisGraph": self.checkBox_3.isChecked()}
+        
+        
+        
+        
 
         ##Button press handler: Knee Flex
     def on_button_click_Kneeflex(self):
@@ -285,7 +301,7 @@ class Ui_Dialog(object):
             pixmap = QPixmap(pelvisPNG)
         self.label.setPixmap(pixmap)
 
-    def launch_help_page(self):
+    def launch_help_page(self, app, Dialog):
         HelpPage.Dialog = QtWidgets.QDialog()
         HelpPage.ui = HelpPage.Ui_Dialog()
         HelpPage.ui.setupUi(HelpPage.Dialog)
@@ -294,15 +310,22 @@ class Ui_Dialog(object):
         Dialog.close()
 
 
-    def logout(self):
+    def logout(self, app, Dialog):
         LoginPage.Dialog = QtWidgets.QDialog()
         LoginPage.ui = LoginPage.Ui_Dialog()
         LoginPage.ui.setupUi(LoginPage.Dialog)
         LoginPage.Dialog.show()
         app.exec_
         Dialog.close()
+
+    def graph_selection(self):
+        import PDFGenerator
+
         
-                        
+
+        pass    
+        
+                    
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -320,6 +343,39 @@ class Ui_Dialog(object):
         self.checkBox_7.setText(_translate("Dialog", "Bold Text"))
         self.checkBox_8.setText(_translate("Dialog", "Increased Font Size"))
         self.pushButton_7.setText(_translate("Dialog", "Generate PDF"))
+
+        
+
+
+        
+        ##retrieve pateint data from database
+        self.connect = sqlite3.connect("loginData.db")
+        self.cursor = self.connect.cursor()
+        self.cursor.execute("SELECT name, id, age, address, contact FROM patientDetails WHERE id = ? ", (self.patient_id,))
+        result = self.cursor.fetchone()
+        self.connect.close()
+
+        self.name = result[0]
+        self.id_number = result[1]
+        self.age = result[2]
+        self.address = result[3]
+        self.contact_number = result[4]
+
+        ##set text values
+        text = "<p><strong>Name:</strong> {0}</p>".format(self.name)
+        text += "<p><strong>ID Number:</strong> {0}</p>".format(self.id_number)
+        text += "<p><strong>Age:</strong> {0}</p>".format(self.age)
+        text += "<p><strong>Address:</strong> {0}</p>".format(self.address)
+        text += "<p><strong>Contact Number:</strong> {0}</p>".format(self.contact_number)    
+        
+
+
+
+
+
+
+
+
         self.textBrowser.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -337,15 +393,41 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Patient Details</span></p></body></html>"))
-        self.textBrowser_4.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Name:</span><span style=\" font-size:10pt;\"> John Smith</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">ID Number: </span><span style=\" font-size:10pt;\">255051</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Age:</span><span style=\" font-size:10pt;\"> 52</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Address:</span><span style=\" font-size:10pt;\"> 23 High Street</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">Contact Number:</span><span style=\" font-size:10pt;\"> 07892342091</span></p></body></html>"))
+        self.textBrowser_4.setHtml(_translate("Dialog", f"""
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+    <html>
+    <head>
+        <meta name="qrichtext" content="1" />
+        <style type="text/css">
+            p, li {{ white-space: pre-wrap; }}
+        </style>
+    </head>
+    <body style="font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+        <p style="margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">
+            <span style="font-size:10pt; font-weight:600;">Name:</span>
+            <span style="font-size:10pt;">{self.name}</span>
+        </p>
+        <p style="margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">
+            <span style="font-size:10pt; font-weight:600;">ID Number:</span>
+            <span style="font-size:10pt;">{self.id_number}</span>
+        </p>
+        <p style="margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">
+            <span style="font-size:10pt; font-weight:600;">Age:</span>
+            <span style="font-size:10pt;">{self.age}</span>
+        </p>
+        <p style="margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">
+            <span style="font-size:10pt; font-weight:600;">Address:</span>
+            <span style="font-size:10pt;">{self.address}</span>
+        </p>
+        <p style="margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">
+            <span style="font-size:10pt; font-weight:600;">Contact Number:</span>
+            <span style="font-size:10pt;">{self.contact_number}</span>
+        </p>
+    </body>
+    </html>
+""")) 
+
+
         self.textBrowser_5.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -394,9 +476,10 @@ class Ui_Dialog(object):
         self.pushButton_4.setToolTip(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Help Page</span></p></body></html>"))
         self.pushButton_4.setText(_translate("Dialog", "?"))
         self.pushButton_5.setText(_translate("Dialog", "Log Out"))
+        self.textBrowser_4.setHtml(text)
 
 
-
+'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -405,3 +488,4 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
+'''

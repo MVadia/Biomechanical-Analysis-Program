@@ -10,10 +10,13 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import AlphaDesignCode
+import sys
 
 
 class Ui_Dialog(object):
+
     def setupUi(self, Dialog):
+        app = QtWidgets.QApplication(sys.argv)
         Dialog.setObjectName("Dialog")
         Dialog.resize(1358, 1015)
         self.textBrowser = QtWidgets.QTextBrowser(Dialog)
@@ -41,12 +44,12 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
-        self.pushButton.clicked.connect(self.return_to_login)
+        self.pushButton.clicked.connect(lambda: self.return_to_login(app, Dialog))
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
-    def return_to_login(self):
+    def return_to_login(self, app, Dialog):
         AlphaDesignCode.Dialog = QtWidgets.QDialog()
         AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
         AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
@@ -98,6 +101,7 @@ class Ui_Dialog(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600;\">For Developers:<br /></span><span style=\" font-size:10pt;\">If you would like to view the source code for this program, feel free to visit the GitHub repository here: https://github.com/MVadia/Biomechanical-Analysis-Program.git</span></p></body></html>"))
         self.pushButton.setText(_translate("Dialog", "Return To Log in Page"))
 
+'''
 
 if __name__ == "__main__":
     import sys
@@ -107,3 +111,4 @@ if __name__ == "__main__":
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec_())
+'''

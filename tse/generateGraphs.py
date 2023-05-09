@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as pt
 import csv
 import numpy as np
+from PyQt5 import QtCore
 ##TKINTER
 import tkinter as tk
 
@@ -16,8 +17,9 @@ yLElblow = []
 yRElbow = []
 yPelvis = []
 
-
-        
+def setInputFile(file_path):
+    global inputFile
+    inputFile = file_path
 
 #Knee flexion
 def KneeData ():

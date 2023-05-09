@@ -11,9 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
 import AlphaDesignCode, doctorEntries, patientRegister, HelpPage
+import sys
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
+        app = QtWidgets.QApplication(sys.argv)
         Dialog.setObjectName("Dialog")
         Dialog.resize(1359, 998)
         self.line_3 = QtWidgets.QFrame(Dialog)
@@ -52,7 +54,7 @@ class Ui_Dialog(object):
         self.PatientLoginButton = QtWidgets.QPushButton(Dialog)
         self.PatientLoginButton.setGeometry(QtCore.QRect(870, 300, 61, 31))
         ##doctor login pressed
-        self.DoctorLoginButton.clicked.connect(self.doctor_login_pressed)
+        self.DoctorLoginButton.clicked.connect(lambda: self.doctor_login_pressed(app, Dialog))
 
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -62,7 +64,7 @@ class Ui_Dialog(object):
         self.PatientLoginButton.setObjectName("PatientLoginButton")
 
         ##patient login pressed
-        self.PatientLoginButton.clicked.connect(self.patient_login_pressed)
+        self.PatientLoginButton.clicked.connect(lambda: self.patient_login_pressed(app, Dialog))
 
         self.DoctorLoginButton_2 = QtWidgets.QPushButton(Dialog)
         self.DoctorLoginButton_2.setGeometry(QtCore.QRect(960, 300, 71, 31))
@@ -115,7 +117,7 @@ class Ui_Dialog(object):
 
 
 
-    def doctor_login_pressed(self):
+    def doctor_login_pressed(self, app, Dialog):
         # Retrieve the input values
         doctor_id_input = self.lineEdit.text()
         doctor_pass_input = self.lineEdit_2.text()
@@ -143,7 +145,7 @@ class Ui_Dialog(object):
 
 
 
-    def patient_login_pressed(self):
+    def patient_login_pressed(self, app, Dialog):
         #retrieve input
         patient_id_input = self.lineEdit_3.text()
         patient_pass_input = self.lineEdit_4.text()
@@ -161,7 +163,7 @@ class Ui_Dialog(object):
             print("successfull")
             AlphaDesignCode.Dialog = QtWidgets.QDialog()
             AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
-            AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
+            AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog, patient_id_input)
             AlphaDesignCode.Dialog.show()
             app.exec_()
             Dialog.close()
@@ -179,7 +181,7 @@ class Ui_Dialog(object):
         app.exec_()
         Dialog.close()
 
-    def launch_help_page(self):
+    def launch_help_page(self, app, Dialog):
         HelpPage.Dialog = QtWidgets.QDialog()
         HelpPage.ui = HelpPage.Ui_Dialog()
         HelpPage.ui.setupUi(HelpPage.Dialog)

@@ -9,12 +9,16 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 import sqlite3
-import AlphaDesignCode, HelpPage
+import AlphaDesignCode, HelpPage, dropCSV
+from generateGraphs import setInputFile
+import sys
 
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
+        app = QtWidgets.QApplication(sys.argv)
         Dialog.setObjectName("Dialog")
         Dialog.resize(1358, 891)
         self.line = QtWidgets.QFrame(Dialog)
@@ -107,6 +111,7 @@ class Ui_Dialog(object):
         self.pushButton = QtWidgets.QPushButton(Dialog)
         self.pushButton.setGeometry(QtCore.QRect(990, 270, 81, 31))
         self.pushButton.setObjectName("pushButton") ##add csv
+        self.pushButton.clicked.connect(self.add_csv)
         self.pushButton_2 = QtWidgets.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(1250, 30, 31, 31))
         font = QtGui.QFont()
@@ -125,13 +130,25 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton_3.setFont(font)
         self.pushButton_3.setObjectName("pushButton_3") ##confirm button
-        self.pushButton_3.clicked.connect(self.add_details)
+        self.pushButton_3.clicked.connect(lambda: self.add_details(app, Dialog))
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
 
-    def add_details(self):
+
+    def add_csv(self):
+        import os
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select CSV File", "", "CSV Files (*.csv)", options=options)
+        if file_path:
+            filename = os.path.basename(file_path)
+            setInputFile(file_path)
+            QMessageBox.information(None, "File Added", "CSV File added successfully, add patient information: " + filename, QMessageBox.Ok )
+
+
+    def add_details(self, app, Dialog):
         patient_name = self.lineEdit.text()
         patient_id = self.lineEdit_2.text()
         patient_age = self.lineEdit_3.text()

@@ -1,11 +1,14 @@
 import sys, os
-from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5 import QtCore
+
+from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel
 
 from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog,QPushButton
 
 class MyWidget(QWidget):
+    file_selected = QtCore.pyqtSignal(str)
     def __init__(self):
         super().__init__()
         self.setAcceptDrops(True)
@@ -38,6 +41,8 @@ class MyWidget(QWidget):
                 background-color: #27632a;
             }
         """)
+
+        
         self.title_label = QLabel("Drag and Drop a CSV File", self)
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setGeometry(50, 50, 300, 50)
@@ -87,10 +92,13 @@ class MyWidget(QWidget):
             filename = os.path.basename(file_path)
             self.filepath = file_path
             self.file_label.setText(f"Selected file: {filename}")
+            self.file_selected.emit(file_path)
 
     def confirm (self):
+        if hasattr(self, "filepath"):
+            self.file_selected.emit(self.filepath)
         self.close()
-        pass
+        
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
