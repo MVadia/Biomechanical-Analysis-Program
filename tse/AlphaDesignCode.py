@@ -9,12 +9,35 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import os
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtWidgets import QWidget
+import sys
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+import generateGraphs, HelpPage, LoginPage
 
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(1363, 899)
+
+        ##Graph widget creation
+        self.layout = QVBoxLayout(Dialog)
+        Dialog.setLayout(self.layout)
+        self.widget = QtWidgets.QWidget(Dialog)
+        self.widget.setGeometry(QtCore.QRect(500, 400, 800, 800))
+        self.widget.setObjectName("widget")      
+        self.label = QLabel(self.widget)
+        self.label.setGeometry(QtCore.QRect(374, -73, 800, 800))
+        self.label.setObjectName("label")
+        self.layout.addWidget(self.widget)
+
+
         Dialog.setAutoFillBackground(False)
         self.line = QtWidgets.QFrame(Dialog)
         self.line.setGeometry(QtCore.QRect(290, 90, 20, 721))
@@ -35,6 +58,9 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
+        ##knee flex button
+        self.pushButton.clicked.connect(self.on_button_click_Kneeflex)
+
         self.pushButton_2 = QtWidgets.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(40, 260, 221, 71))
         font = QtGui.QFont()
@@ -44,6 +70,10 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setObjectName("pushButton_2")
+
+        ##Button Press Handle: Elbow Flex
+        self.pushButton_2.clicked.connect(self.on_button_clickElbowFlex)
+
         self.pushButton_3 = QtWidgets.QPushButton(Dialog)
         self.pushButton_3.setGeometry(QtCore.QRect(20, 370, 261, 71))
         font = QtGui.QFont()
@@ -53,6 +83,8 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton_3.setFont(font)
         self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_3.clicked.connect(self.on_button_clickPelvisFlex)
+
         self.line_3 = QtWidgets.QFrame(Dialog)
         self.line_3.setGeometry(QtCore.QRect(0, 80, 1361, 16))
         self.line_3.setFrameShape(QtWidgets.QFrame.HLine)
@@ -205,7 +237,8 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_4.setFont(font)
-        self.pushButton_4.setObjectName("pushButton_4")
+        self.pushButton_4.setObjectName("pushButton_4") ##help butotn
+        self.pushButton_4.clicked.connect(self.launch_help_page)
         self.pushButton_5 = QtWidgets.QPushButton(Dialog)
         self.pushButton_5.setGeometry(QtCore.QRect(60, 20, 81, 31))
         font = QtGui.QFont()
@@ -213,10 +246,63 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_5.setFont(font)
-        self.pushButton_5.setObjectName("pushButton_5")
+        self.pushButton_5.setObjectName("pushButton_5") ##log out
+        self.pushButton_5.clicked.connect(self.logout)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+
+
+        ##Button press handler: Knee Flex
+    def on_button_click_Kneeflex(self):
+        kneePNG = ('Knee_Flexion.png')
+        if os.path.isfile(kneePNG):
+            pixmap = QPixmap (kneePNG)
+        else:
+            kneePNG = generateGraphs.KneeData()
+            pixmap = QPixmap(kneePNG)
+        self.label.setPixmap(pixmap)
+        pass
+
+        ##Button Handler: Elbow Flex
+    def on_button_clickElbowFlex(self):
+        elbowPNG = ('Elbow_Flexion.png')
+        if os.path.isfile(elbowPNG):
+            pixmap = QPixmap (elbowPNG)
+        else:
+            elbowPNG = generateGraphs.elbowData()
+            pixmap = QPixmap(elbowPNG)
+        self.label.setPixmap(pixmap)
+        
+
+    def on_button_clickPelvisFlex(self):
+        pelvisPNG = ('Pelvis_Flexion.png')
+        if os.path.isfile(pelvisPNG):
+            pixmap = QPixmap(pelvisPNG)
+        else:
+            pelvisPNG = generateGraphs.pelvisData()
+            pixmap = QPixmap(pelvisPNG)
+        self.label.setPixmap(pixmap)
+
+    def launch_help_page(self):
+        HelpPage.Dialog = QtWidgets.QDialog()
+        HelpPage.ui = HelpPage.Ui_Dialog()
+        HelpPage.ui.setupUi(HelpPage.Dialog)
+        HelpPage.Dialog.show()
+        app.exec_()
+        Dialog.close()
+
+
+    def logout(self):
+        LoginPage.Dialog = QtWidgets.QDialog()
+        LoginPage.ui = LoginPage.Ui_Dialog()
+        LoginPage.ui.setupUi(LoginPage.Dialog)
+        LoginPage.Dialog.show()
+        app.exec_
+        Dialog.close()
+        
+                        
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -308,6 +394,7 @@ class Ui_Dialog(object):
         self.pushButton_4.setToolTip(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Help Page</span></p></body></html>"))
         self.pushButton_4.setText(_translate("Dialog", "?"))
         self.pushButton_5.setText(_translate("Dialog", "Log Out"))
+
 
 
 if __name__ == "__main__":

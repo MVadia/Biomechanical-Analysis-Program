@@ -9,6 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sqlite3
+import AlphaDesignCode, HelpPage
 
 
 class Ui_Dialog(object):
@@ -104,7 +106,7 @@ class Ui_Dialog(object):
         self.line_9.setObjectName("line_9")
         self.pushButton = QtWidgets.QPushButton(Dialog)
         self.pushButton.setGeometry(QtCore.QRect(990, 270, 81, 31))
-        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setObjectName("pushButton") ##add csv
         self.pushButton_2 = QtWidgets.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(1250, 30, 31, 31))
         font = QtGui.QFont()
@@ -112,7 +114,9 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_2.setFont(font)
-        self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_2.setObjectName("pushButton_2") ##help page
+        self.pushButton_2.clicked.connect(self.launch_help_page)
+
         self.pushButton_3 = QtWidgets.QPushButton(Dialog)
         self.pushButton_3.setGeometry(QtCore.QRect(290, 530, 101, 41))
         font = QtGui.QFont()
@@ -120,10 +124,49 @@ class Ui_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_3.setFont(font)
-        self.pushButton_3.setObjectName("pushButton_3")
+        self.pushButton_3.setObjectName("pushButton_3") ##confirm button
+        self.pushButton_3.clicked.connect(self.add_details)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+
+    def add_details(self):
+        patient_name = self.lineEdit.text()
+        patient_id = self.lineEdit_2.text()
+        patient_age = self.lineEdit_3.text()
+        patient_address = self.lineEdit_4.text()
+        patient_contact = self.lineEdit_5.text()
+
+        connect = sqlite3.connect("loginData.db")
+        cursor = connect.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS patientDetails_fromDoctor (id INTEGER PRIMARY KEY, patient_id INTEGER, name TEXT, address TEXT,
+        age TEXT, contact INTEGER)''')
+
+        ##insert data into table
+        cursor.execute("INSERT INTO patientDetails_fromDoctor (patient_id, name, address, age, contact) VALUES (?, ?, ?, ?, ?)", (patient_id, patient_name, patient_address,
+                                                                                                                   patient_age,
+                                                                                                                   patient_contact))
+        connect.commit()
+
+        ##contrinue to main page
+        AlphaDesignCode.Dialog = QtWidgets.QDialog()
+        AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
+        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
+        AlphaDesignCode.Dialog.show()
+        app.exec_()
+        Dialog.close()
+
+    def launch_help_page(self):
+        HelpPage.Dialog = QtWidgets.QDialog()
+        HelpPage.ui = HelpPage.Ui_Dialog()
+        HelpPage.ui.setupUi(HelpPage.Dialog)
+        HelpPage.Dialog.show()
+        app.exec_()
+        Dialog.close()
+
+        
+
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate

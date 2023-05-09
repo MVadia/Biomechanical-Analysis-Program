@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import AlphaDesignCode
 
 
 class Ui_Dialog(object):
@@ -40,9 +41,18 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.return_to_login)
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def return_to_login(self):
+        AlphaDesignCode.Dialog = QtWidgets.QDialog()
+        AlphaDesignCode.ui = AlphaDesignCode.Ui_Dialog()
+        AlphaDesignCode.ui.setupUi(AlphaDesignCode.Dialog)
+        AlphaDesignCode.Dialog.show()
+        app.exec_()
+        Dialog.close()
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
