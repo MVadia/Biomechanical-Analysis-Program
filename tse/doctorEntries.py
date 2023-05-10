@@ -108,10 +108,19 @@ class Ui_Dialog(object):
         self.line_9.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_9.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_9.setObjectName("line_9")
+
         self.pushButton = QtWidgets.QPushButton(Dialog)
-        self.pushButton.setGeometry(QtCore.QRect(990, 270, 81, 31))
+        self.pushButton.setGeometry(QtCore.QRect(978, 270, 105, 31))
         self.pushButton.setObjectName("pushButton") ##add csv
         self.pushButton.clicked.connect(self.add_csv)
+
+        self.post_csv = QtWidgets.QPushButton(Dialog)
+        self.post_csv.setGeometry(QtCore.QRect(978, 305, 105, 31))
+        self.post_csv.setObjectName("addPostCSV") ##add csv
+        self.post_csv.clicked.connect(self.add_csv)
+
+        
+
         self.pushButton_2 = QtWidgets.QPushButton(Dialog)
         self.pushButton_2.setGeometry(QtCore.QRect(1250, 30, 31, 31))
         font = QtGui.QFont()
@@ -141,11 +150,23 @@ class Ui_Dialog(object):
         import os
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select CSV File", "", "CSV Files (*.csv)", options=options)
+        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select Pre-Treatment CSV File", "", "CSV Files (*.csv)", options=options)
         if file_path:
             filename = os.path.basename(file_path)
             setInputFile(file_path)
             QMessageBox.information(None, "File Added", "CSV File added successfully, add patient information: " + filename, QMessageBox.Ok )
+
+
+    def add_post_csv(self):
+        import os
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select Post-Treatment CSV File", "", "CSV Files (*.csv)", options=options)
+        if file_path:
+            filename = os.path.basename(file_path)
+            setInputFile(file_path)
+            QMessageBox.information(None, "File Added", "CSV File added successfully, add patient information: " + filename, QMessageBox.Ok )
+
 
 
     def add_details(self, app, Dialog):
@@ -234,10 +255,11 @@ class Ui_Dialog(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">Add a CSV File</span></p></body></html>"))
-        self.pushButton.setText(_translate("Dialog", "Select CSV"))
+        self.pushButton.setText(_translate("Dialog", "Add Pre Data CSV"))
         self.pushButton_2.setToolTip(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Help Page</span></p></body></html>"))
         self.pushButton_2.setText(_translate("Dialog", "?"))
         self.pushButton_3.setText(_translate("Dialog", "Confirm "))
+        self.post_csv.setText("Add Post Data CSV")
 
 
 if __name__ == "__main__":
