@@ -22,6 +22,7 @@ def get_graph_data(name, address, age, contact, graph_selected):
     address = str(address)
     age = str(age)
     contact = str(contact)
+    
 
     p = document.add_paragraph('Name: ' + name + ' \n Age: '+ age +
                                '\n Address: ' + address + '\n Contact Num: '+ contact)
@@ -33,6 +34,21 @@ def get_graph_data(name, address, age, contact, graph_selected):
 
     p.space_before = Inches(3)
     p.right_indent = Inches(7) - (p.paragraph_format.left_indent or Inches(0)) - (p.paragraph_format.first_line_indent or Inches(0)) - (p.paragraph_format.space_before or Pt(0))
+
+
+    description = document.add_paragraph()
+    description.add_run("\n")
+    description.add_run("\n")
+    description.add_run("\n")
+    description.add_run("\n")
+    description.add_run("\n")
+    description.add_run("\n")
+    description.add_run("\n")
+    description.add_run("\n")
+
+    description.add_run(" Jfbwkjbe efujwekfjh ewjkfhjwke ejwkfhjwkehe").bold = True
+    description.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
 
 
     for graph_name, selected in graph_selected.items():
