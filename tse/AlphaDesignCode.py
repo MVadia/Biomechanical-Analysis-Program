@@ -371,7 +371,7 @@ class Ui_Dialog(object):
 
         
 
-        pass    
+        
 
 
     def on_button_click_PostKneeflex(self):
