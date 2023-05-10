@@ -49,7 +49,7 @@ class Ui_Dialog(object):
 
         Dialog.setAutoFillBackground(False)
         self.line = QtWidgets.QFrame(Dialog)
-        self.line.setGeometry(QtCore.QRect(290, 90, 20, 721))
+        self.line.setGeometry(QtCore.QRect(290, 90, 20, 768))
         self.line.setFrameShape(QtWidgets.QFrame.VLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
@@ -142,7 +142,7 @@ class Ui_Dialog(object):
         self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_3.setObjectName("line_3")
         self.line_4 = QtWidgets.QFrame(Dialog)
-        self.line_4.setGeometry(QtCore.QRect(1103, 90, 20, 721))
+        self.line_4.setGeometry(QtCore.QRect(1103, 90, 20, 768))
         self.line_4.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_4.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_4.setObjectName("line_4")
@@ -212,17 +212,17 @@ class Ui_Dialog(object):
         self.line_6.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_6.setObjectName("line_6")
         self.line_7 = QtWidgets.QFrame(Dialog)
-        self.line_7.setGeometry(QtCore.QRect(480, 600, 20, 211))
+        self.line_7.setGeometry(QtCore.QRect(480, 600, 20, 260))
         self.line_7.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_7.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_7.setObjectName("line_7")
         self.line_8 = QtWidgets.QFrame(Dialog)
-        self.line_8.setGeometry(QtCore.QRect(690, 600, 20, 211))
+        self.line_8.setGeometry(QtCore.QRect(690, 600, 20, 260))
         self.line_8.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_8.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_8.setObjectName("line_8")
         self.line_9 = QtWidgets.QFrame(Dialog)
-        self.line_9.setGeometry(QtCore.QRect(910, 600, 20, 211))
+        self.line_9.setGeometry(QtCore.QRect(910, 600, 20, 260))
         self.line_9.setFrameShape(QtWidgets.QFrame.VLine)
         self.line_9.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_9.setObjectName("line_9")
@@ -246,6 +246,11 @@ class Ui_Dialog(object):
         self.line_13.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_13.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_13.setObjectName("line_13")
+        self.line_14 = QtWidgets.QFrame(Dialog)
+        self.line_14.setGeometry(QtCore.QRect(300, 850, 811, 16))
+        self.line_14.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_14.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_14.setObjectName("line_14")
         self.textBrowser = QtWidgets.QTextBrowser(Dialog)
         self.textBrowser.setGeometry(QtCore.QRect(570, 0, 271, 81))
         self.textBrowser.setObjectName("textBrowser")
@@ -274,17 +279,20 @@ class Ui_Dialog(object):
         self.textBrowser_9.setGeometry(QtCore.QRect(970, 600, 101, 31))
         self.textBrowser_9.setObjectName("textBrowser_9")
         self.textBrowser_10 = QtWidgets.QTextBrowser(Dialog)
-        self.textBrowser_10.setGeometry(QtCore.QRect(340, 640, 121, 31))
+        self.textBrowser_10.setGeometry(QtCore.QRect(360, 640, 81, 31))
         self.textBrowser_10.setObjectName("textBrowser_10")
         self.textBrowser_11 = QtWidgets.QTextBrowser(Dialog)
-        self.textBrowser_11.setGeometry(QtCore.QRect(340, 680, 121, 31))
+        self.textBrowser_11.setGeometry(QtCore.QRect(360, 680, 81, 31))
         self.textBrowser_11.setObjectName("textBrowser_11")
         self.textBrowser_12 = QtWidgets.QTextBrowser(Dialog)
-        self.textBrowser_12.setGeometry(QtCore.QRect(320, 730, 161, 31))
+        self.textBrowser_12.setGeometry(QtCore.QRect(360, 730, 81, 31))
         self.textBrowser_12.setObjectName("textBrowser_12")
         self.textBrowser_13 = QtWidgets.QTextBrowser(Dialog)
-        self.textBrowser_13.setGeometry(QtCore.QRect(320, 770, 161, 31))
+        self.textBrowser_13.setGeometry(QtCore.QRect(360, 770, 81, 31))
         self.textBrowser_13.setObjectName("textBrowser_13")
+        self.textBrowser_14 = QtWidgets.QTextBrowser(Dialog)
+        self.textBrowser_14.setGeometry(QtCore.QRect(360, 815, 61, 31))
+        self.textBrowser_14.setObjectName("textBrowser_14")
         self.pushButton_4 = QtWidgets.QPushButton(Dialog)
         self.pushButton_4.setGeometry(QtCore.QRect(1260, 20, 31, 31))
         font = QtGui.QFont()
@@ -523,22 +531,27 @@ class Ui_Dialog(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Squat Power (L)</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Knee (L)</span></p></body></html>"))
         self.textBrowser_11.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Squat Power (R)</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Knee (R)</span></p></body></html>"))
         self.textBrowser_12.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Squat Smoothness (L)</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Elbow (L)</span></p></body></html>"))
         self.textBrowser_13.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Squat Smoothness (R)</span></p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Elbow (R)</span></p></body></html>"))
+        self.textBrowser_14.setHtml(_translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt; font-weight:600; font-style:italic;\">Pevis</span></p></body></html>"))
         self.pushButton_4.setToolTip(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Help Page</span></p></body></html>"))
         self.pushButton_4.setText(_translate("Dialog", "?"))
         self.pushButton_5.setText(_translate("Dialog", "Log Out"))
