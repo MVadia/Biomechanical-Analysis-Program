@@ -8,7 +8,8 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.shape import WD_INLINE_SHAPE
 from docx2pdf import convert
 from docx.shared import RGBColor
-
+import os
+from PyQt5.QtWidgets import QMessageBox
 
 
 
@@ -16,7 +17,7 @@ from docx.shared import RGBColor
 
 
 ##Code here to handle patient data and selected graphs, add to functions
-def get_graph_data(name, address, age, contact, graph_selected):
+def get_graph_data(name, address, age, contact, graph_selected, RKneediff, LKneediff, RElbowdiff, LElbowdiff, Pelvisdiff):
     document = Document('existing_template.docx')
     name = str(name)
     address = str(address)
@@ -45,8 +46,12 @@ def get_graph_data(name, address, age, contact, graph_selected):
     description.add_run("\n")
     description.add_run("\n")
     description.add_run("\n")
-
-    description.add_run(" Jfbwkjbe efujwekfjh ewjkfhjwke ejwkfhjwkehe").bold = True
+    description.add_run("Pre - Post treatment difference data: (flexion difference)").bold = True
+    description.add_run('\n\n               Right Knee Difference: ' + str(RKneediff) +
+                        '\n\n           Left Knee Difference: ' + str(LKneediff) +
+                        '\n\n           Right Elbow Difference: ' + str(RElbowdiff) +
+                        '\n\n           Left Elbow Difference: ' + str(LElbowdiff) + 
+                        '\n\n           Pelvis Difference: ' + str(Pelvisdiff)).bold = True
     description.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
 
@@ -74,15 +79,14 @@ def get_graph_data(name, address, age, contact, graph_selected):
     output = "report.pdf"
 
     convert(input_file, output)
+    file_location()
 
 
-graph_selected = { "Pre_Knee_Flexion.png": True,     
-                            "Pre_Elbow_Flexion.png": True,
-                           "Pre_Pelvis_Flexion.png": True,
-                           "Post_Knee_Flexion.png": True,
-                           "Post_Elbow_Flexion.png": True,
-                           "Post_Pelvis_flexion.png": True}
+def file_location():
+    for root, dirs, files in os.walk("."):
+        file_location = os.path.join(root, "report.pdf")
+    QMessageBox.information(None, "PDF Generated", "Patient report generated successfully. Location:" + file_location, QMessageBox.Ok )
 
 
 
-get_graph_data(name="name", address="address", age="age", contact="Contact", graph_selected= graph_selected)
+

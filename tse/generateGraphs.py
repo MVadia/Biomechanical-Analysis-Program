@@ -357,8 +357,7 @@ def compareData():
 
     
 
-    
-
+     return pre_data, post_data, pre_Lknee_flexion.mean(), post_Lknee_flexion.mean(), pre_Rknee_flexion.mean(), post_Rknee_flexion.mean(), pre_LElbow_flexion.mean(), post_LElbow_flexion.mean(), pre_RElbow_flexion.mean(), post_RElbow_flexion.mean(), pre_Pelvis_flexion.mean(), post_Pelvis_flexion.mean(), LKneediff, RKneediff, LElbowdiff, RElbowdiff, Pelvisdiff
 
 
 compareData()
