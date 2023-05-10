@@ -321,11 +321,3 @@ def PostElbowData():
 
 
 
-
-#preKneeData()
-#preelbowData()
-#prepelvisData()
-
-PostKneeData()
-#PostElbowData()
-#PostpelvisData()

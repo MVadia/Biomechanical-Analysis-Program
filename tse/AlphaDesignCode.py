@@ -97,7 +97,7 @@ class Ui_Dialog(object):
 
         ##post knee data
         self.postKnee_button = QtWidgets.QPushButton(Dialog)
-        self.postKnee_button.setGeometry(QtCore.QRect(20, 370, 261, 71))
+        self.postKnee_button.setGeometry(QtCore.QRect(20, 470, 261, 71))
         font = QtGui.QFont()
         font.setFamily("Segoe UI Semibold")
         font.setPointSize(10)
@@ -105,12 +105,12 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.postKnee_button.setFont(font)
         self.postKnee_button.setObjectName("postKnee_button")
-        #self.postKnee_button.clicked.connect(self.on_button_click_PostKneeflex)
+        self.postKnee_button.clicked.connect(self.on_button_click_PostKneeflex)
 
 
         ##post elbow data
         self.postElbow_button = QtWidgets.QPushButton(Dialog)
-        self.postElbow_button.setGeometry(QtCore.QRect(20, 370, 261, 71))
+        self.postElbow_button.setGeometry(QtCore.QRect(20, 570, 261, 71))
         font = QtGui.QFont()
         font.setFamily("Segoe UI Semibold")
         font.setPointSize(10)
@@ -118,12 +118,12 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.postElbow_button.setFont(font)
         self.postElbow_button.setObjectName("postElbow_button")
-        #self.postKnee_button.clicked.connect(self.on_button_click_PostKneeflex)
+        self.postElbow_button.clicked.connect(self.on_button_clickPostElbowFlex)
 
 
         ##post pelvis data
         self.postPelvis_button = QtWidgets.QPushButton(Dialog)
-        self.postPelvis_button.setGeometry(QtCore.QRect(20, 370, 261, 71))
+        self.postPelvis_button.setGeometry(QtCore.QRect(20, 670, 261, 71))
         font = QtGui.QFont()
         font.setFamily("Segoe UI Semibold")
         font.setPointSize(10)
@@ -131,7 +131,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         self.postPelvis_button.setFont(font)
         self.postPelvis_button.setObjectName("postPelvis_button")
-        #self.postKnee_button.clicked.connect(self.on_button_click_PostKneeflex)       
+        self.postPelvis_button.clicked.connect(self.on_button_click_PostPelvisflex)       
 
 
 
@@ -310,32 +310,32 @@ class Ui_Dialog(object):
 
         ##Button press handler: Knee Flex
     def on_button_click_Kneeflex(self):
-        kneePNG = ('Knee_Flexion.png')
+        kneePNG = ('Pre_Knee_Flexion.png')
         if os.path.isfile(kneePNG):
             pixmap = QPixmap (kneePNG)
         else:
-            kneePNG = generateGraphs.KneeData()
+            kneePNG = generateGraphs.preKneeData()
             pixmap = QPixmap(kneePNG)
         self.label.setPixmap(pixmap)
         pass
 
         ##Button Handler: Elbow Flex
     def on_button_clickElbowFlex(self):
-        elbowPNG = ('Elbow_Flexion.png')
+        elbowPNG = ('Pre_Elbow_Flexion.png')
         if os.path.isfile(elbowPNG):
             pixmap = QPixmap (elbowPNG)
         else:
-            elbowPNG = generateGraphs.elbowData()
+            elbowPNG = generateGraphs.preelbowData()
             pixmap = QPixmap(elbowPNG)
         self.label.setPixmap(pixmap)
         
 
     def on_button_clickPelvisFlex(self):
-        pelvisPNG = ('Pelvis_Flexion.png')
+        pelvisPNG = ('Pre_Pelvis_Flexion.png')
         if os.path.isfile(pelvisPNG):
             pixmap = QPixmap(pelvisPNG)
         else:
-            pelvisPNG = generateGraphs.pelvisData()
+            pelvisPNG = generateGraphs.prepelvisData()
             pixmap = QPixmap(pelvisPNG)
         self.label.setPixmap(pixmap)
 
@@ -358,16 +358,14 @@ class Ui_Dialog(object):
 
     def graph_selection(self):
 
-        self.graph_select = { "KneeGraph": self.checkBox.isChecked(),     
-                            "ElbowGraph": self.checkBox_2.isChecked(),
-                           "PelvisGraph": self.checkBox_3.isChecked()}
+        self.graph_selected = { "Pre_Knee_Flexion.png": self.checkBox.isChecked(),     
+                            "Pre_Elbow_Flexion.png": self.checkBox_2.isChecked(),
+                           "Pre_Pelvis_Flexion.png": self.checkBox_3.isChecked(),
+                           "Post_Knee_Flexion.png": self.checkBox_4.isChecked(),
+                           "Post_Elbow_Flexion.png": self.checkBox_5.isChecked(),
+                           "Post_Pelvis_flexion.png": self.checkBox_6.isChecked()}
         import PDFGenerator
-        PDFGenerator.get_graph_data(self.name, self.address,
-                                    self.age, self.contact_number, self.graph_select)
-        print (self.graph_select)
-        print (self.checkBox.text(), self.checkBox.isChecked())
-        print (self.checkBox_3.text(), self.checkBox_2.isChecked())
-        print (self.checkBox_3.text(), self.checkBox_3.isChecked())
+        PDFGenerator.get_graph_data(self.name, self.address, self.age, self.contact_number, self.graph_selected)
 
         
 
@@ -375,33 +373,33 @@ class Ui_Dialog(object):
 
 
     def on_button_click_PostKneeflex(self):
-        kneePNG = ('Knee_Flexion.png')
-        if os.path.isfile(kneePNG):
-            pixmap = QPixmap (kneePNG)
+        PostkneePNG = ('Post_Knee_Flexion.png')
+        if os.path.isfile(PostkneePNG):
+            pixmap = QPixmap (PostkneePNG)
         else:
-            kneePNG = generateGraphs.KneeData()
-            pixmap = QPixmap(kneePNG)
+            PostkneePNG = generateGraphs.PostKneeData()
+            pixmap = QPixmap(PostkneePNG)
         self.label.setPixmap(pixmap)
         pass
 
         ##Button Handler: Elbow Flex
     def on_button_clickPostElbowFlex(self):
-        elbowPNG = ('Elbow_Flexion.png')
-        if os.path.isfile(elbowPNG):
-            pixmap = QPixmap (elbowPNG)
+        PostElbowPNG = ('Post_Elbow_Flexion.png')
+        if os.path.isfile(PostElbowPNG):
+            pixmap = QPixmap (PostElbowPNG)
         else:
-            elbowPNG = generateGraphs.elbowData()
-            pixmap = QPixmap(elbowPNG)
+            PostElbowPNG = generateGraphs.PostElbowData()
+            pixmap = QPixmap(PostElbowPNG)
         self.label.setPixmap(pixmap)
 
 
-    def on_button_click_PostKneeflex(self):
-        kneePNG = ('Knee_Flexion.png')
-        if os.path.isfile(kneePNG):
-            pixmap = QPixmap (kneePNG)
+    def on_button_click_PostPelvisflex(self):
+        PostPelvisPNG = ('Post_Pelvis_flexion.png')
+        if os.path.isfile(PostPelvisPNG):
+            pixmap = QPixmap (PostPelvisPNG)
         else:
-            kneePNG = generateGraphs.KneeData()
-            pixmap = QPixmap(kneePNG)
+            PostPelvisPNG = generateGraphs.PostpelvisData()
+            pixmap = QPixmap(PostPelvisPNG)
         self.label.setPixmap(pixmap)
         pass
 
@@ -544,7 +542,11 @@ class Ui_Dialog(object):
         self.pushButton_4.setToolTip(_translate("Dialog", "<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Help Page</span></p></body></html>"))
         self.pushButton_4.setText(_translate("Dialog", "?"))
         self.pushButton_5.setText(_translate("Dialog", "Log Out"))
+        self.postKnee_button.setText("Post Knee Flexion")
+        self.postElbow_button.setText("Post Elbow Flexion")
+        self.postPelvis_button.setText("Post Pelvis Flexion")
         self.textBrowser_4.setHtml(text)
+
 
 
 '''
