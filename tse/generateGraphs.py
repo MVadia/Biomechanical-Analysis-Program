@@ -315,9 +315,53 @@ def PostElbowData():
 
 
 
+def compareData():
+     pre_data = pd.read_csv("tse/pre_data.csv")
+     post_data = pd.read_csv("tse/post_data.csv")
+     
+     #Lknee Diff
+     pre_Lknee_flexion = pre_data["left_knee_flexion_mean"]
+     post_Lknee_flexion = post_data["left_knee_flexion_mean"]
+
+     #Rknee Diff
+     pre_Rknee_flexion = pre_data["right_knee_flexion_mean"]
+     post_Rknee_flexion = post_data["right_knee_flexion_mean"]
+
+     #LElbow Diff
+     pre_LElbow_flexion = pre_data["left_elbow_flexion_mean"]
+     post_LElbow_flexion = post_data["left_elbow_flexion_mean"]
+
+     #RElbow Diff
+     pre_RElbow_flexion = pre_data["right_elbow_flexion_mean"]
+     post_RElbow_flexion = post_data["right_elbow_flexion_mean"]
+
+     #Pelvis Diff
+     pre_Pelvis_flexion = pre_data["pelvis_flexion_mean"]
+     post_Pelvis_flexion = post_data["pelvis_flexion_mean"]
+
+
+     LKneediff = abs((pre_Lknee_flexion.mean() - post_Lknee_flexion.mean()) / pre_Lknee_flexion.mean()) * 100
+     RKneediff = abs((pre_Rknee_flexion.mean() - post_Rknee_flexion.mean()) / pre_Rknee_flexion.mean()) * 100
+
+     LElbowdiff = abs((pre_LElbow_flexion.mean() - post_LElbow_flexion.mean()) / pre_LElbow_flexion.mean()) * 100
+     RElbowdiff = abs((pre_RElbow_flexion.mean() - post_RElbow_flexion.mean()) / pre_RElbow_flexion.mean()) * 100
+
+     Pelvisdiff = abs((pre_Pelvis_flexion.mean() - post_Pelvis_flexion.mean()) / pre_Pelvis_flexion.mean()) * 100
+
+     print ("Left Knee Difference: "+ str(LKneediff))
+     print ("Right Knee Difference: "+ str(RKneediff))
+     print("Right Elbow diff: "+ str(RElbowdiff))
+     print("Left Elbow diff: "+ str(LElbowdiff))
+     print("Pelvis diff: "+ str(Pelvisdiff))
+
+
+    
+
+    
 
 
 
+compareData()
 
 
 
