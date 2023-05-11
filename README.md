@@ -9,7 +9,9 @@ Before running: pip install requirements.txt
 ## HOW TO USE
 ## Method 1
 - Download "Public Release file". 
-- Navigate to LoginPage.py. Click to run
+- Navigate to LoginPage.exe. Click to run
+- For testing : 
+-  Patient Login (ID: 1, Password: password321)
 
 ## Method 2 (ideal for developers)
 Download or clone this repository.
