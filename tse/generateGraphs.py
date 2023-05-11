@@ -1,18 +1,36 @@
 #Generate graphs from CSV inputimport numpy as np
-import math
 import pandas as pd
 import matplotlib.pyplot as pt
 import csv
 import numpy as np
 from PyQt5 import QtCore
-##TKINTER
-import tkinter as tk
+import os, sys
+
 
 #global variables
-inputFile = "tse/pre_data.csv"
 
 
-postDatafile = "tse/post_data.csv"
+if hasattr(sys, '_MEIPASS'):
+    # PyInstaller creates a temp folder to extract the files.
+    # Use the path of the temp folder to locate the pre_data.csv file.
+    pre_data_path = os.path.join(sys._MEIPASS, 'tse', 'pre_data.csv')
+else:
+    # Use the original relative path to locate the pre_data.csv file.
+    exe_dir = os.path.dirname(os.path.abspath(__file__))
+    pre_data_path = os.path.join(exe_dir, '..', 'tse', 'pre_data.csv')
+
+
+if hasattr(sys, '_MEIPASS'):
+    # PyInstaller creates a temp folder to extract the files.
+    # Use the path of the temp folder to locate the pre_data.csv file.
+    postDatafile = os.path.join(sys._MEIPASS, 'tse', 'post_data.csv')
+else:
+    # Use the original relative path to locate the pre_data.csv file.
+    exe_dir = os.path.dirname(os.path.abspath(__file__))
+    postDatafile = os.path.join(exe_dir, '..', 'tse', 'post_data.csv')
+
+
+
 
 
 yLKnee = []
@@ -316,8 +334,8 @@ def PostElbowData():
 
 
 def compareData():
-     pre_data = pd.read_csv("tse/pre_data.csv")
-     post_data = pd.read_csv("tse/post_data.csv")
+     pre_data = pd.read_csv(pre_data_path)
+     post_data = pd.read_csv(postDatafile)
      
      #Lknee Diff
      pre_Lknee_flexion = pre_data["left_knee_flexion_mean"]

@@ -10,7 +10,7 @@ from docx2pdf import convert
 from docx.shared import RGBColor
 import os
 from PyQt5.QtWidgets import QMessageBox
-
+import datetime
 
 
 
@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 ##Code here to handle patient data and selected graphs, add to functions
 def get_graph_data(name, address, age, contact, graph_selected, RKneediff, LKneediff, RElbowdiff, LElbowdiff, Pelvisdiff):
-    document = Document('existing_template.docx')
+    document = Document('report_template.docx')
     name = str(name)
     address = str(address)
     age = str(age)
@@ -36,8 +36,12 @@ def get_graph_data(name, address, age, contact, graph_selected, RKneediff, LKnee
     p.space_before = Inches(3)
     p.right_indent = Inches(7) - (p.paragraph_format.left_indent or Inches(0)) - (p.paragraph_format.first_line_indent or Inches(0)) - (p.paragraph_format.space_before or Pt(0))
 
-
+    today = datetime.date.today()
+    today_str = today.strftime("%Y-%m-%d")
+    
     description = document.add_paragraph()
+    description.add_run("\n")
+    description.add_run("Report generated on: "+ today_str)
     description.add_run("\n")
     description.add_run("\n")
     description.add_run("\n")
@@ -74,17 +78,17 @@ def get_graph_data(name, address, age, contact, graph_selected, RKneediff, LKnee
     # save the document
     document.save('Modified.docx')
 
-
+    
     input_file = "Modified.docx"
-    output = "report.pdf"
+    output = name + " - report.pdf"
 
     convert(input_file, output)
-    file_location()
+    file_location(output)
 
 
-def file_location():
+def file_location(output):
     for root, dirs, files in os.walk("."):
-        file_location = os.path.join(root, "report.pdf")
+        file_location = os.path.join(root, output)
     QMessageBox.information(None, "PDF Generated", "Patient report generated successfully. Location:" + file_location, QMessageBox.Ok )
 
 
