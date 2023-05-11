@@ -7,11 +7,11 @@ Python 3.11
 Before running: pip install requirements.txt
 
 ## HOW TO USE
-# Method 1
-- Download "Public Release file. 
+## Method 1
+- Download "Public Release file". 
 - Navigate to LoginPage.py. Click to run
 
-# Method 2 (ideal for developers)
+## Method 2 (ideal for developers)
 Download or clone this repository.
 Run login.py in your IDE.
 
@@ -19,5 +19,6 @@ Run login.py in your IDE.
 
 ## Developers
 - Muhammad Vadia (Backend + Frontend + GUI)
+- Lucy Samways (Backend + Frontend)
 - Jack Higginson (Frontend)
 - Joshua Thomas (GUI)
